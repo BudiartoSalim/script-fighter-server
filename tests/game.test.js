@@ -56,6 +56,30 @@ describe('Game Routes Test', () => {
       })
       .then(data => {
         console.log('User has Been Delete')
+        return Item.destroy({
+          where: {
+            id: dummyItem.id
+          }
+        })
+      })
+      .then(data => {
+        console.log('Item Has Been Deleted')
+        return Monster.destroy({
+          where: {
+            id: dummyMonster.id
+          }
+        })
+      })
+      .then(data => {
+        console.log('Monster has been deleted')
+        return Question.destroy({
+          where: {
+            id: dummyQuestion.id
+          }
+        })
+      })
+      .then(data => {
+        console.log('All data has Been deleted')
         done()
       })
       .catch(err => {
