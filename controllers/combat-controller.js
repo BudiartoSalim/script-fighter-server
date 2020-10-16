@@ -4,16 +4,11 @@ class CombatController {
 
   // PUT /combat/experience/:userid
   static gainExperiencePutHandler(req, res, next) {
-    let userId = User.findOne({
-      where: {
-        id: req.params.userid
-      }
-    })
     UserStatus.update({
       collectedExp: Number(collectedExp) + Number(req.body.collectedExp)
     },{
       where: {
-        UserId: userId.id
+        UserId: req.params.userid
       }
     })
     .then(data => {
