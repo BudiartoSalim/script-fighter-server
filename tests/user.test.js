@@ -4,16 +4,11 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../models')
 const { describe } = require('yargs');
 const app = require('../app.js');
+
 describe('User Routes Test', () => {
 
   beforeAll((done) => {
-    try {
-      //generate data used for testing
-      done();
-    } catch (err) {
-      done(err);
-    }
-  })
+
 
   afterAll((done) => {
     try {
