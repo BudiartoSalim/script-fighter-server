@@ -40,7 +40,7 @@ describe('Game Routes Test', () => {
         difficulty: 3,
         monster_image: 'https://www.google.com/'
       })
-      await dummyToken = jwt.sign({id: dummyUser.id, email: dummyUser.email, userStatus: dummyUser.userStatus}, process.env.SECRET_KEY)
+      dummyToken = jwt.sign({id: dummyUser.id, email: dummyUser.email, userStatus: dummyUser.userStatus}, process.env.SECRET_KEY)
       done()
     } catch (e) {
     done(e)
