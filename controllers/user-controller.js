@@ -26,7 +26,7 @@ class UserController {
       })
       res.status(201).json({ message: `User ${req.body.username} successfully registered!` });
     } catch (err) {
-      res.status(500).json({ message: err.errors[0].message })
+      next(err);
     }
   }
 
@@ -39,13 +39,13 @@ class UserController {
           let access_token = jwt.sign({ id: userData.id, }, process.env.JWT_SECRET_KEY);
           res.status(200).json({ access_token: access_token });
         } else {
-          res.status(401).json({ message: 'Wrong email or password.' });
+          next({ name: 'LoginError', message: 'Wrong email or password.' });
         }
       } else {
-        res.status(401).json({ message: 'Wrong email or password.' });
+        next({ name: 'LoginError', message: 'Wrong email or password.' });
       }
     } catch (err) {
-      res.status(500).json({ message: err.errors[0].message });
+      next(err);
     }
 
   }
