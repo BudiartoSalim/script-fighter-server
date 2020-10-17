@@ -8,7 +8,7 @@ const GameController = require('../controllers/game-controller.js');
 router.post('/register', UserController.registerNewUserPostHandler);
 router.post('/login', UserController.loginUserPostHandler);
 router.use('/combat', CombatRouter);
-router.put('/shop/:userid/:item',GameController.upgradeStat);
-router.patch('/users/:userid/difficulty',GameController.updateUserDifficult);
+router.put('/shop/:userid/:item', GameController.upgradeStat);
+//router.patch('/users/:userid/difficulty', GameController.updateUserDifficult);
 
 module.exports = router;
