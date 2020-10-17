@@ -3,20 +3,31 @@ const { User, Item, Monster, Question, UserStatus } = require('../models')
 class CombatController {
 
   // PUT /combat/experience/:userid
-  static gainExperiencePutHandler(req, res, next) {
-    UserStatus.update({
-      collectedExp: Number(collectedExp) + Number(req.body.collectedExp)
+  static async gainExperiencePutHandler(req, res, next) {
+    console.log(req.params.userid)
+    try {
+      const userStatus = await UserStatus.findOne({
+      where: {
+        UserId: req.params.userid
+      }
+    })
+    // res.status(200).json(userStatus)
+    const statusUpdate = await UserStatus.update({
+      collectedExp: parseInt(Number(userStatus.collectedExp) + Number(req.body.experience)),
+      money: parseInt(Number(userStatus.money) + Number(req.body.money))
     },{
       where: {
         UserId: req.params.userid
       }
     })
-    .then(data => {
-      res.status(200).json(data)
-    })
-    .catch(err => {
-      res.status(500).json(err)
-    })
+      res.status(200).json({
+        message: 'Your status has been updated'
+      })
+    } catch(err) {
+      console.log(err)
+      next(err)
+    }
+
   }
 
   // GET /combat/monster/:idmonster
