@@ -1,5 +1,7 @@
 const { User, ItemShop, Monster, Question, UserStatus } = require('../models')
 class GameController {
+
+  //put /shop/:userid/:item
   static async upgradeStat(req, res, next) {
     const item = await ItemShop.findOne({
       where: {
@@ -7,28 +9,28 @@ class GameController {
       }
     })
     const userStatus = await UserStatus.findOne({
-    where: {
-      UserId: req.params.userid
-    }
-  })
+      where: {
+        UserId: req.params.userid
+      }
+    })
     const userStatUpdate = await UserStatus.update({
-    atk: parseInt(Number(userStatus.atk) + Number(req.body.stat)),
-    hp: parseInt(Number(userStatus.hp) + Number(req.body.stat)),
-    def: parseInt(Number(userStatus.def) + Number(req.body.stat)),
-    money: parseInt(Number(userStatus.money) - Number(item.price))
-  },{
-    where: {
-      id: req.params.userid
-    }
+      atk: (userStatus.atk + parseInt(req.body.stat)),
+      hp: (userStatus.hp + parseInt(req.body.stat)),
+      def: (userStatus.def + parseInt(req.body.stat)),
+      money: (userStatus.money - parseInt(item.price))
+    }, {
+      where: {
+        id: req.params.userid
+      }
     })
-    .then(data => {
-      res.status(200).json({
-        message: 'Your status has been updated'
+      .then(data => {
+        res.status(200).json({
+          message: 'Your status has been updated'
+        })
       })
-    })
-    .catch(err => {
-      res.status(500).json(err)
-    })
+      .catch(err => {
+        res.status(500).json(err)
+      })
   }
   static updateUserDifficult(req, res, next) {
     UserStatus.update({
@@ -39,14 +41,14 @@ class GameController {
         UserId: req.params.userid
       }
     })
-    .then(data => {
-      res.status(500).json({
-        message: 'Your Difficulty Status has Been updated'
+      .then(data => {
+        res.status(500).json({
+          message: 'Your Difficulty Status has Been updated'
+        })
       })
-    })
-    .catch(err => {
-      res.status(500).json(err)
-    })
+      .catch(err => {
+        res.status(500).json(err)
+      })
   }
 }
 module.exports = GameController;
