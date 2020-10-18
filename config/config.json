@@ -9,7 +9,7 @@
   "test": {
     "username": "postgres",
     "password": "postgres",
-    "database": "script_fighter_test",
+    "database": "script_fighter",
     "host": "localhost",
     "dialect": "postgres"
   },

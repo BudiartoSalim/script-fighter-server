@@ -4,7 +4,6 @@ class CombatController {
 
   // PUT /combat/experience/:userid
   static async gainExperiencePutHandler(req, res, next) {
-    console.log(req.params.userid)
     try {
       const userStatus = await UserStatus.findOne({
       where: {

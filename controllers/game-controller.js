@@ -32,7 +32,8 @@ class GameController {
   }
   static updateUserDifficult(req, res, next) {
     UserStatus.update({
-      currentDifficulty: req.body.difficulty
+      currentDifficulty: req.body.difficulty,
+      maxDifficulty: req.body.difficulty
     }, {
       where: {
         UserId: req.params.userid
