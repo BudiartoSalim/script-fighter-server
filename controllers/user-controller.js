@@ -24,6 +24,7 @@ class UserController {
         reputation: 0,
         UserId: newUser.id
       })
+      // res.status(201).json(newUser)
       res.status(201).json({ username: newUser.username, message: `User ${newUser.username} successfully registered!` });
     } catch (err) {
       console.log(err)
@@ -40,8 +41,8 @@ class UserController {
         if (bcrypt.compareSync(req.body.password, userData.password)) {
           console.log(bcrypt.compareSync(req.body.password, userData.password))
           let access_token = jwt.sign({ id: userData.id, }, process.env.JWT_SECRET_KEY);
-
-          res.status(200).json({ access_token: access_token, user: userData, status: userData.UserStatus });
+          // console.log(`ini env nya ${process.env.JWT_SECRET_KEY}`)
+          res.status(200).json({ access_token: access_token, user: userData });
         } else {
           next({ name: 'LoginError', message: 'Incorrect Username/Password' });
         }

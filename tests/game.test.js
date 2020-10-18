@@ -1,36 +1,49 @@
-const { beforeAll, afterAll, expect } = require('@jest/globals');
+// const { beforeAll, afterAll, expect } = require('@jest/globals');
 const request = require('supertest');
 const jwt = require('jsonwebtoken')
-const { User, ItemShop, Monster, Question } = require('../models')
+const { User, ItemShop, Monster, Question, UserStatus } = require('../models')
 // const { describe } = require('yargs');
 const app = require('../app.js');
 let dummyToken;
 let dummyUser;
-let dummyitem;
+let dummyItem;
 let dummyQuestion;
 let dummyMonster;
 describe('Game Routes Test', () => {
 
   beforeAll( async (done) => {
     try {
-      dummyUser = await User.create({
+      const dataUser = await User.create({
         username: 'dummy_user',
         email: 'dummy_user@mail.com',
         password: 'dummy_user12'
       })
-      dummyItem = await ItemShop.create({
+      const dataItem = await ItemShop.create({
         item_name: 'Resurection Scroll',
         price: 999999,
         description: 'Change player status to Undefeatable'
       })
-      dummyQuestion = await Question.create({
+      const newUserStatus = await UserStatus.create({
+        level: 1,
+        hp: 100,
+        atk: 30,
+        def: 25,
+        requiredExp: 100,
+        collectedExp: 0,
+        money: 500,
+        maxDifficulty: 1,
+        currentDifficulty: 1,
+        reputation: 0,
+        UserId: dataUser.dataValues.id
+      })
+      const dataQuestion = await Question.create({
         question: 'Is this a question?',
         answer: 'Correct,Wrong,False,True',
         correct_answer: 'Correct',
         explanation: 'https://www.google.com/',
         difficulty: 2
       })
-      dummyMonster = await Monster.create({
+      const dataMonster = await Monster.create({
         monster_name: 'Imhotep',
         hp: 999999,
         atk: 999999,
@@ -40,8 +53,11 @@ describe('Game Routes Test', () => {
         difficulty: 3,
         monster_image: 'https://www.google.com/'
       })
+      dummyUser = dataUser.id
+      dummyItem = dataItem.id
+      dummyMonster = dataMonster.id
+      dummyQuestion = dataQuestion.id
       dummyToken = await jwt.sign({id: dummyUser.id, email: dummyUser.email, userStatus: dummyUser.userStatus}, 'process.env.SECRET_KEY')
-      console.log(dummyToken)
       done()
     } catch (e) {
     done(e)
@@ -51,24 +67,21 @@ describe('Game Routes Test', () => {
   afterAll((done) => {
     try {
       User.destroy({
-        where: {
-          id: dummyUser.id
-        }
+        where: {},
+        truncate: true
       })
       .then(data => {
         console.log('User has Been Delete')
         return ItemShop.destroy({
-          where: {
-            id: dummyItem.id
-          }
+          where: {},
+          truncate: true
         })
       })
       .then(data => {
         console.log('Item Has Been Deleted')
         return Monster.destroy({
-          where: {
-            id: dummyMonster.id
-          }
+          where: {},
+          truncate: true
         })
       })
       .then(data => {
@@ -94,9 +107,14 @@ describe('Game Routes Test', () => {
 
   describe('PUT /combat/experience/:userid', () => {
     test.only("Success put player exp", (done) => {
+      console.log(dummyItem)
+      console.log(dummyToken)
+      console.log(dummyMonster)
+      console.log(dummyUser)
+      console.log(dummyQuestion)
       request(app)
-      .put(`/combat/experience/${dummyUser.id}`)
-      // .set('access_token', dummyToken)
+      .put(`/combat/experience/${dummyUser}`)
+      .set('access_token', dummyToken)
       .send({
         exp: 10,
         money: 50
@@ -116,7 +134,7 @@ describe('Game Routes Test', () => {
     })
     test("Failed put player exp without access_token", (done) => {
       request(app)
-      .put(`/combat/experience/${dummyUser.id}`)
+      .put(`/combat/experience/${dummyUser}`)
       .send({
         exp: 10,
         money: 50
@@ -133,7 +151,7 @@ describe('Game Routes Test', () => {
     })
     test("Failed put player exp with non-integer value of exp", (done) => {
       request(app)
-      .put(`/combat/experience/${dummyUser.id}`)
+      .put(`/combat/experience/${dummyUser}`)
       .set('access_token', dummyToken)
       .send({
         exp: 'asd',
@@ -151,7 +169,7 @@ describe('Game Routes Test', () => {
     })
     test("Failed put player exp with non-integer value of money", (done) => {
       request(app)
-      .put(`/combat/experience/${dummyUser.id}`)
+      .put(`/combat/experience/${dummyUser}`)
       .set('access_token', dummyToken)
       .send({
         exp: 13,
@@ -172,7 +190,7 @@ describe('Game Routes Test', () => {
   describe('PUT /shop/:userid/:item', () => {
     test("Success buy player exp", (done) => {
       request(app)
-      .put(`/shop/${dummyUser.id}/${dummyitem.id}`)
+      .put(`/shop/${dummyUser}/${dummyitem}`)
       .set('access_token', dummyToken)
       .send({
         stat: 10,
@@ -191,7 +209,7 @@ describe('Game Routes Test', () => {
     })
     test("failed buy item without access_token", (done) => {
       request(app)
-      .put(`/shop/${dummyUser.id}/${dummyitem.id}`)
+      .put(`/shop/${dummyUser}/${dummyitem}`)
       .send({
         stat: 10,
         money: 50
@@ -208,7 +226,7 @@ describe('Game Routes Test', () => {
     })
     test("failed buy item because insufficient money", (done) => {
       request(app)
-      .put(`/shop/${dummyUser.id}/${dummyitem.id}`)
+      .put(`/shop/${dummyUser}/${dummyitem}`)
       .set('access_token', dummyToken)
       .send({
         stat: 10,
@@ -226,7 +244,7 @@ describe('Game Routes Test', () => {
     })
     test("failed buy item because invalid type of money", (done) => {
       request(app)
-      .put(`/shop/${dummyUser.id}/${dummyitem.id}`)
+      .put(`/shop/${dummyUser}/${dummyitem}`)
       .set('access_token', dummyToken)
       .send({
         stat: 10,
@@ -245,7 +263,7 @@ describe('Game Routes Test', () => {
 
     test("failed buy item because invalid type of stat", (done) => {
       request(app)
-      .put(`/shop/${dummyUser.id}/${dummyitem.id}`)
+      .put(`/shop/${dummyUser}/${dummyitem}`)
       .set('access_token', dummyToken)
       .send({
         stat: 'GODLIKE',
@@ -263,7 +281,7 @@ describe('Game Routes Test', () => {
     })
     test("failed buy item because negative value of stat/money", (done) => {
       request(app)
-      .put(`/shop/${dummyUser.id}/${dummyitem.id}`)
+      .put(`/shop/${dummyUser}/${dummyitem}`)
       .set('access_token', dummyToken)
       .send({
         stat: -5,
@@ -331,7 +349,7 @@ describe('Game Routes Test', () => {
    describe('PATCH /users/:userid/difficulty', () => {
      test('success editing user difficulty', (done) => {
        request(app)
-       .patch(`/users/${dummyUser.id}/difficulty`)
+       .patch(`/users/${dummyUser}/difficulty`)
        .set('access_token',dummyToken)
        .send({
          difficulty: 2
@@ -349,7 +367,7 @@ describe('Game Routes Test', () => {
      })
      test('failed editing user difficulty without access_token', (done) => {
        request(app)
-       .patch(`/users/${dummyUser.id}/difficulty`)
+       .patch(`/users/${dummyUser}/difficulty`)
        .send({
          difficulty: 2
        })
@@ -365,7 +383,7 @@ describe('Game Routes Test', () => {
      })
      test('failed editing user difficulty because of over-range or under-ranged difficulty value', (done) => {
        request(app)
-       .patch(`/users/${dummyUser.id}/difficulty`)
+       .patch(`/users/${dummyUser}/difficulty`)
        .set('access_token',dummyToken)
        .send({
          difficulty: -3
