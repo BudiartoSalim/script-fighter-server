@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      question: {
+        type: Sequelize.STRING
+      },
       answer: {
         type: Sequelize.STRING
       },

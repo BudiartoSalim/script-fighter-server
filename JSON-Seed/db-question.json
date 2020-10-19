@@ -1,20 +1,23 @@
 [
   {
+    "question" : "Which one is the hardest?",
     "answer" : "Object Refference,Pass Refference",
     "correct_answer" : "Object Refference",
-    "explanation" : "Which one is the hardest?",
+    "explanation" : "Choose The Correct Answer",
     "difficulty" : 0
   },
   {
+    "question" : "what is the correct answer?",
     "answer" : "true,false",
     "correct_answer" : "true",
-    "explanation" : "what is the correct answer?",
+    "explanation" : "Choose The Correct Answer",
     "difficulty" : 1
   },
   {
+    "question" : "Who's our first president?",
     "answer" : "Soekarno,Sukarno",
     "correct_answer" : "Soekarno",
-    "explanation" : "Who's our first president?",
+    "explanation" : "Choose The Correct Answer",
     "difficulty" : 2
   }
 ]
