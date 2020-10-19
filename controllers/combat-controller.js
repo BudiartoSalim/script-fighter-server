@@ -3,7 +3,7 @@ const levelupCheck = require('../helpers/levelup-checker.js'); //takes 1 paramet
 
 class CombatController {
 
-  // PUT /combat/experience/:userid
+  // PUT /combat/experience/
   static async gainExperiencePutHandler(req, res, next) {
     try {
       const userCurrentStatus = await UserStatus.findOne({
