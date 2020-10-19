@@ -8,7 +8,7 @@ class CombatController {
     try {
       const userCurrentStatus = await UserStatus.findOne({
         where: {
-          UserId: req.params.userid
+          UserId: req.payload.id
         }
       })
 
@@ -17,7 +17,7 @@ class CombatController {
         money: (userCurrentStatus.money + parseInt(req.body.money))
       }, {
         where: {
-          UserId: req.params.userid
+          UserId: req.payload.id
         },
         returning: true,
         plain: true
@@ -26,7 +26,7 @@ class CombatController {
         const leveledUpStat = await levelupCheck(statusUpdate[1].UserId);
         res.status(200).json({ status: leveledUpStat[1] });
       } else {
-        res.status(200).json({ status : statusUpdate[1] });
+        res.status(200).json({ status: statusUpdate[1] });
       }
     } catch (err) {
       next(err)
@@ -42,7 +42,7 @@ class CombatController {
       }
     })
       .then(monster => {
-        res.status(200).json({monster})
+        res.status(200).json({ monster })
       })
       .catch(err => {
         res.status(500).json(err)

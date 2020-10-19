@@ -10,7 +10,7 @@ class GameController {
     })
     const userStatus = await UserStatus.findOne({
       where: {
-        UserId: req.params.userid
+        UserId: req.payload.id
       }
     })
     const userStatUpdate = await UserStatus.update({
@@ -40,7 +40,7 @@ class GameController {
       maxDifficulty: req.body.difficulty
     }, {
       where: {
-        UserId: req.params.userid
+        UserId: req.payload.id
       }
     })
       .then(data => {
