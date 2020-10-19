@@ -6,9 +6,11 @@ const userAuthentication = require('../middlewares/authentication.js');
 
 const UserController = require('../controllers/user-controller.js');
 const GameController = require('../controllers/game-controller.js');
+const CombatController = require('../controllers/combat-controller.js');
 
 router.post('/register', UserController.registerNewUserPostHandler);
 router.post('/login', UserController.loginUserPostHandler);
+router.get('/monster', CombatController.getMonsterHandler);
 router.use(userAuthentication);
 router.use('/combat', CombatRouter);
 router.use('/shop', ShopRouter);

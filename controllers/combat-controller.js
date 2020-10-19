@@ -3,6 +3,19 @@ const levelupCheck = require('../helpers/levelup-checker.js'); //takes 1 paramet
 
 class CombatController {
 
+  // GET /monster
+  static async getMonsterHandler(req, res, next) {
+    try {
+      const currentUser = await User.findOne({ where: { id: req.payload.id } });
+      const monsters = await Monster.findAll({ where: { difficulty: currentUser.currentDifficulty } });
+      const questions = await Question.findAll({ where: { difficulty: currentUser.currentDifficulty } });
+      res.status(200).json({ monsters, questions });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
   // PUT /combat/experience/
   static async gainExperiencePutHandler(req, res, next) {
     try {
@@ -31,11 +44,10 @@ class CombatController {
     } catch (err) {
       next(err)
     }
-
   }
 
   // GET /combat/monster/:idmonster
-  static getMonsterHandler(req, res, next) {
+  static getMonsterByIdHandler(req, res, next) {
     Monster.findOne({
       where: {
         id: req.params.idmonster
