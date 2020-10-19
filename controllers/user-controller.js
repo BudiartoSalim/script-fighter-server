@@ -54,6 +54,24 @@ class UserController {
     }
   }
 
+  static async getUserRankHandler(req, res, next) {
+    try {
+      const userRank = await UserStatus.findAll({
+        attributes: ['level', 'collectedExp'],
+        include: [{
+          model: User,
+          attributes: ['username'],
+          right: true
+        }],
+        order: [['collectedExp', 'DESC']],
+        limit: 10
+      })
+      res.status(200).json({ userRank });
+    } catch (err) {
+      next(err);
+    }
+  }
+
 }
 
 module.exports = UserController;
