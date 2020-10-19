@@ -17,6 +17,18 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      atk: {
+        type: Sequelize.INTEGER
+      },
+      hp: {
+        type: Sequelize.INTEGER
+      },
+      def: {
+        type: Sequelize.INTEGER
+      },
+      difficulty: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
