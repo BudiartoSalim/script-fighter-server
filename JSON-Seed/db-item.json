@@ -3,27 +3,27 @@
     "item_name" : "Almighty Scope",
     "price" : 150,
     "description" : "Increase All Attribute",
-    "atk" : 150,
-    "hp" : 150,
-    "def" : 50,
-    "difficulty" : 2
+    "atk" : 8,
+    "hp" : 8,
+    "def" : 10,
+    "difficulty" : 0
   },
   {
     "item_name" : "Cangkul",
     "price" : 100,
     "description" : "Increase Atk Attribute",
-    "atk" : 250,
-    "hp" : 0,
-    "def" : 0,
+    "atk" : 10,
+    "hp" : 12,
+    "def" : 15,
     "difficulty" : 1
   },
   {
     "item_name" : "Sekop Pasir",
     "price" : 100,
     "description" : "Increase deff Attribute",
-    "atk" : 0,
-    "hp" : 200,
-    "def" : 0,
-    "difficulty" : 0
+    "atk" : 30,
+    "hp" : 20,
+    "def" : 15,
+    "difficulty" : 2
   }
 ]
