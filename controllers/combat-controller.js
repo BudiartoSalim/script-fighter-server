@@ -6,11 +6,12 @@ class CombatController {
   // GET /monster
   static async getMonsterHandler(req, res, next) {
     try {
-      const currentUser = await User.findOne({ where: { id: req.payload.id } });
-      const monsters = await Monster.findAll({ where: { difficulty: currentUser.currentDifficulty } });
-      const questions = await Question.findAll({ where: { difficulty: currentUser.currentDifficulty } });
+      const currentUser = await User.findOne({ where: { id: req.payload.id }, include: UserStatus });
+      const monsters = await Monster.findAll({ where: { difficulty: currentUser.UserStatus.currentDifficulty } });
+      const questions = await Question.findAll({ where: { difficulty: currentUser.UserStatus.currentDifficulty } });
       res.status(200).json({ monsters, questions });
     } catch (err) {
+      console.log(err)
       next(err);
     }
   }

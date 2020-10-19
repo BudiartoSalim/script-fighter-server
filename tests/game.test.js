@@ -275,8 +275,8 @@ describe("Game Routes Unit Test", () => {
       })
     })
   })
-  describe("Get Monster", () => {
-    test.only("Retrive Monster Data from Database",(done) => {
+  describe("Get Monster By Specific ID", () => {
+    test.only("Success Retrive Monster Data from Database By Specific Id",(done) => {
       request(app)
       .get(`/combat/monster/${dummyMonsterId.id}`)
       .set('access_token',dummyToken)
@@ -286,6 +286,49 @@ describe("Game Routes Unit Test", () => {
         } else {
           expect(res.status).toBe(200)
           expect(res.body).toHaveProperty('monster')
+          done()
+        }
+      })
+    })
+    test.only("Failed Retrive Monster Data from Database By Specific Id without access_token",(done) => {
+      request(app)
+      .get(`/combat/monster/${dummyMonsterId.id}`)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(401)
+          expect(res.body).toHaveProperty('message','Unauthorized.')
+          done()
+        }
+      })
+    })
+  })
+  describe("Get All Monster With the same difficult as User Difficulty", () => {
+    test.only("Success Retrive Monster From Database",(done) => {
+      request(app)
+      .get(`/monster`)
+      .set('access_token',dummyToken)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(200)
+          expect(res.body).toHaveProperty('monsters')
+          expect(res.body).toHaveProperty('questions')
+          done()
+        }
+      })
+    })
+    test.only("Failed Retrive Monster From Database without access_token",(done) => {
+      request(app)
+      .get(`/monster`)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(401)
+          expect(res.body).toHaveProperty('message','Unauthorized.')
           done()
         }
       })
