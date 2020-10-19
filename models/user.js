@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         notNull: { args: true, msg: "Email unavailable." },
         is: {
             args: /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i,
-            msg: "Email cannot be contained unique character set or must be 6 character less"
+            msg: "Invalid Email format. Please re-check your email!"
           }
       }
     },

@@ -20,16 +20,18 @@ class GameController {
       money: (userStatus.money - parseInt(item.price))
     }, {
       where: {
-        id: req.params.userid
+        id: userStatus.id
       }
     })
       .then(data => {
         res.status(200).json({
-          message: 'Your status has been updated'
+          message: 'Successfully upgrade your status',
+          userStatus
         })
       })
       .catch(err => {
-        res.status(500).json(err)
+        next(err)
+        // res.status(500).json(err)
       })
   }
   static updateUserDifficult(req, res, next) {
@@ -42,12 +44,13 @@ class GameController {
       }
     })
       .then(data => {
-        res.status(500).json({
+        res.status(200).json({
           message: 'Your Difficulty Status has Been updated'
         })
       })
       .catch(err => {
-        res.status(500).json(err)
+        next(err)
+        // res.status(500).json(err)
       })
   }
 }

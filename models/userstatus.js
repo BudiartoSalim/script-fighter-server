@@ -15,14 +15,56 @@ module.exports = (sequelize, DataTypes) => {
   };
   UserStatus.init({
     level: { type: DataTypes.INTEGER, allowNull: false },
-    hp: { type: DataTypes.INTEGER, allowNull: false },
-    atk: { type: DataTypes.INTEGER, allowNull: false },
-    def: { type: DataTypes.INTEGER, allowNull: false },
+    hp: { type: DataTypes.INTEGER, allowNull: false,
+      validate: {
+        min:{
+          args:[0],
+          msg:'cannot post with negative value'
+        }
+      }
+     },
+    atk: { type: DataTypes.INTEGER, allowNull: false,
+      validate: {
+        min:{
+          args:[0],
+          msg:'cannot post with negative value'
+        }
+      }
+     },
+    def: { type: DataTypes.INTEGER, allowNull: false,
+      validate: {
+        min:{
+          args:[0],
+          msg:'cannot post with negative value'
+        }
+      }
+    },
     requiredExp: { type: DataTypes.INTEGER, allowNull: false },
-    collectedExp: { type: DataTypes.INTEGER, allowNull: false },
+    collectedExp: { type: DataTypes.INTEGER, allowNull: false,
+    validate: {
+      isInt:{
+        args:[true],
+        msg: 'Invalid type of exp'
+      }
+    }
+  },
     money: { type: DataTypes.INTEGER, allowNull: false },
-    maxDifficulty: { type: DataTypes.INTEGER, allowNull: false },
-    currentDifficulty: { type: DataTypes.INTEGER, allowNull: false },
+    maxDifficulty: { type: DataTypes.INTEGER, allowNull: false,
+      validate: {
+        min:{
+          args:[0],
+          msg:'Cannot Post with Negative Value'
+        }
+      }
+     },
+    currentDifficulty: { type: DataTypes.INTEGER, allowNull: false,
+      validate: {
+        min:{
+          args:[0],
+          msg:'Cannot Post with Negative Value'
+        }
+      }
+     },
     reputation: { type: DataTypes.INTEGER, allowNull: false },
     UserId: { type: DataTypes.INTEGER, allowNull: false }
   }, {
