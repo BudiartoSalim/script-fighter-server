@@ -67,7 +67,7 @@ describe("Game Routes Unit Test", () => {
         })
       const item = await ItemShop.create({
           item_name: 'Resurection Scroll',
-          price: 999,
+          price: 100,
           description: 'Change player status to Undefeatable',
           atk: 10,
           hp: 10,
@@ -169,7 +169,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test("Failed upgrade status without access_token", (done) => {
+    test.only("Failed upgrade status without access_token", (done) => {
       request(app)
       .put(`/shop/${dummyItemId.id}`)
       .send({
@@ -181,16 +181,17 @@ describe("Game Routes Unit Test", () => {
           done(err)
         } else {
           expect(res.status).toBe(401)
-          expect(res.body).toHaveProperty('message', 'Unauthorize Access')
+          expect(res.body).toHaveProperty('message', 'Unauthorized.')
           done()
         }
       })
     })
   })
   describe("POST /combat/question/:idquestion",() => {
-    test('Checking Answer if User Answer is true', (done) => {
+    test.only('Checking Answer if User Answer is true', (done) => {
       request(app)
       .post(`/combat/question/${dummyQuestionId.id}`)
+      .set('access_token',dummyToken)
       .send({
         answer: 'Correct'
       })
@@ -204,9 +205,10 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test('Checking Answer if User Answer is true', (done) => {
+    test.only('Checking Answer if User Answer is true', (done) => {
       request(app)
       .post(`/combat/question/${dummyQuestionId.id}`)
+      .set('access_token',dummyToken)
       .send({
         answer: 'False'
       })
@@ -222,12 +224,12 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe('PATCH /users/difficulty', () => {
-    test("success editing user difficulty",(done) => {
+    test.only("success editing user difficulty",(done) => {
       request(app)
       .patch(`/users/difficulty`)
       .set('access_token',dummyToken)
       .send({
-        difficulty: 1
+        difficulty: 2
       })
       .end(function(err, res) {
         if(err) {
@@ -239,7 +241,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test("failed editing user difficulty",(done) => {
+    test.only("failed editing user difficulty",(done) => {
       request(app)
       .patch(`/users/difficulty`)
       .set('access_token',dummyToken)
@@ -251,12 +253,12 @@ describe("Game Routes Unit Test", () => {
           done(err)
         } else {
           expect(res.status).toBe(400)
-          expect(res.body).toHaveProperty('message', 'Cannot Post with Negative Value')
+          expect(res.body).toHaveProperty('message', 'Invalid difficulty.')
           done()
         }
       })
     })
-    test("failed editing user difficulty without access_token",(done) => {
+    test.only("failed editing user difficulty without access_token",(done) => {
       request(app)
       .patch(`/users/difficulty`)
       .send({
@@ -267,14 +269,14 @@ describe("Game Routes Unit Test", () => {
           done(err)
         } else {
           expect(res.status).toBe(401)
-          expect(res.body).toHaveProperty('message', 'Unauthorize Access')
+          expect(res.body).toHaveProperty('message', 'Unauthorized.')
           done()
         }
       })
     })
   })
   describe("Get Monster", () => {
-    test("Retrive Monster Data from Database",(done) => {
+    test.only("Retrive Monster Data from Database",(done) => {
       request(app)
       .get(`/combat/monster/${dummyMonsterId.id}`)
       .set('access_token',dummyToken)
