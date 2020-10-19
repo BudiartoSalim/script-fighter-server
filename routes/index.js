@@ -10,7 +10,7 @@ router.post('/register', UserController.registerNewUserPostHandler);
 router.post('/login', UserController.loginUserPostHandler);
 router.use(userAuthentication);
 router.use('/combat', CombatRouter);
-router.put('/shop/:item', GameController.upgradeStat);
-router.patch('/users/difficulty', GameController.updateUserDifficult);
+router.put('/shop/:itemid', GameController.upgradeStat);
+router.patch('/users/difficulty', GameController.updateUserDifficulty);
 
 module.exports = router;
