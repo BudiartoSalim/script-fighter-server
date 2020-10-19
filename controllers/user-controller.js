@@ -24,7 +24,6 @@ class UserController {
         reputation: 0,
         UserId: newUser.id
       })
-      // res.status(201).json(newUser)
       res.status(201).json({ username: newUser.username, message: `User ${newUser.username} successfully registered!` });
     } catch (err) {
       console.log(err)
