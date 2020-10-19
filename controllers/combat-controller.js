@@ -52,9 +52,6 @@ class CombatController {
   // POST /combat/question/:idquestion
   // comparing user answer to the question
   static compareAnswerPostHandler(req, res, next) {
-    // res.status(200).json({
-    //   message: 'Hai'
-    // })
     Question.findOne({
       where: {
         id: req.params.idquestion
