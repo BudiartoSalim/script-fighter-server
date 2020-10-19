@@ -269,6 +269,22 @@ describe("Game Routes Unit Test", () => {
       })
     })
   })
+  describe("Get Monster", () => {
+    test.only("Retrive Monster Data from Database",(done) => {
+      request(app)
+      .get(`/combat/monster/${dummyMonsterId.id}`)
+      .set('access_token',dummyToken)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(200)
+          expect(res.body).toHaveProperty('monster')
+          done()
+        }
+      })
+    })
+  })
 
   afterAll((done) => {
     try {

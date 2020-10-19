@@ -42,7 +42,7 @@ class CombatController {
       }
     })
       .then(monster => {
-        res.status(200).json(monster)
+        res.status(200).json({monster})
       })
       .catch(err => {
         res.status(500).json(err)
