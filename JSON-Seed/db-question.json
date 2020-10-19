@@ -1,0 +1,20 @@
+[
+  {
+    "answer" : "Object Refference,Pass Refference",
+    "correct_answer" : "Object Refference",
+    "explanation" : "Which one is the hardest?",
+    "difficulty" : 0
+  },
+  {
+    "answer" : "true,false",
+    "correct_answer" : "true",
+    "explanation" : "what is the correct answer?",
+    "difficulty" : 1
+  },
+  {
+    "answer" : "Soekarno,Sukarno",
+    "correct_answer" : "Soekarno",
+    "explanation" : "Who's our first president?",
+    "difficulty" : 2
+  }
+]

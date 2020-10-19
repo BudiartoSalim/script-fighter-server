@@ -68,7 +68,11 @@ describe("Game Routes Unit Test", () => {
       const item = await ItemShop.create({
           item_name: 'Resurection Scroll',
           price: 999,
-          description: 'Change player status to Undefeatable'
+          description: 'Change player status to Undefeatable',
+          atk: 10,
+          hp: 10,
+          def: 0,
+          difficulty: 1
         })
       dummyItemId = await ItemShop.findOne({
           where: {
@@ -83,12 +87,12 @@ describe("Game Routes Unit Test", () => {
     }
   })
 
-  describe("PUT /combat/experience/:userid", () => {
+  describe("PUT /combat/experience", () => {
     describe("when success gain exp", () => {
       test.only("Success adding user exp", (done) => {
         console.log(dummyUserId)
          request(app)
-        .put(`/combat/experience/${dummyUserId.id}`)
+        .put(`/combat/experience`)
         .send({
           experience: 10,
           money: 50
@@ -108,7 +112,7 @@ describe("Game Routes Unit Test", () => {
     describe("when failed gain exp", () => {
       test.only("Failed put player exp with non-integer value of exp", (done) => {
         request(app)
-        .put(`/combat/experience/${dummyUserId.id}`)
+        .put(`/combat/experience`)
         .set('access_token', dummyToken)
         .send({
           exp: 'asd',
@@ -127,7 +131,7 @@ describe("Game Routes Unit Test", () => {
       test.only("Failed adding user exp because no have access_token", (done) => {
         console.log(dummyUserId)
          request(app)
-        .put(`/combat/experience/${dummyUserId.id}`)
+        .put(`/combat/experience`)
         .send({
           experience: 10,
           money: 50
@@ -137,7 +141,7 @@ describe("Game Routes Unit Test", () => {
           if(err) {
             done(err)
           } else {
-            expect(res.body).toHaveProperty('message','Unauthorize Access')
+            expect(res.body).toHaveProperty('message','Unauthorized.')
             done()
           }
         })
@@ -145,10 +149,10 @@ describe("Game Routes Unit Test", () => {
 
     })
   })
-  describe("PUT /shop/:userid/:item", () =>{
+  describe("PUT /shop/:item", () =>{
     test.only("Success upgrade status", (done) => {
       request(app)
-      .put(`/shop/${dummyUserId.id}/${dummyItemId.id}`)
+      .put(`/shop/${dummyItemId.id}`)
       .set('access_token', dummyToken)
       .send({
         stat: 10,
@@ -165,9 +169,9 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("Failed upgrade status without access_token", (done) => {
+    test("Failed upgrade status without access_token", (done) => {
       request(app)
-      .put(`/shop/${dummyUserId.id}/${dummyItemId.id}`)
+      .put(`/shop/${dummyItemId.id}`)
       .send({
         stat: 10,
         money: 50
@@ -184,7 +188,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe("POST /combat/question/:idquestion",() => {
-    test.only('Checking Answer if User Answer is true', (done) => {
+    test('Checking Answer if User Answer is true', (done) => {
       request(app)
       .post(`/combat/question/${dummyQuestionId.id}`)
       .send({
@@ -200,7 +204,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only('Checking Answer if User Answer is true', (done) => {
+    test('Checking Answer if User Answer is true', (done) => {
       request(app)
       .post(`/combat/question/${dummyQuestionId.id}`)
       .send({
@@ -217,10 +221,10 @@ describe("Game Routes Unit Test", () => {
       })
     })
   })
-  describe('PATCH /users/:userid/difficulty', () => {
-    test.only("success editing user difficulty",(done) => {
+  describe('PATCH /users/difficulty', () => {
+    test("success editing user difficulty",(done) => {
       request(app)
-      .patch(`/users/${dummyUserId.id}/difficulty`)
+      .patch(`/users/difficulty`)
       .set('access_token',dummyToken)
       .send({
         difficulty: 1
@@ -235,9 +239,9 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("failed editing user difficulty",(done) => {
+    test("failed editing user difficulty",(done) => {
       request(app)
-      .patch(`/users/${dummyUserId.id}/difficulty`)
+      .patch(`/users/difficulty`)
       .set('access_token',dummyToken)
       .send({
         difficulty: -10
@@ -252,9 +256,9 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("failed editing user difficulty without access_token",(done) => {
+    test("failed editing user difficulty without access_token",(done) => {
       request(app)
-      .patch(`/users/${dummyUserId.id}/difficulty`)
+      .patch(`/users/difficulty`)
       .send({
         difficulty: 1
       })
@@ -270,7 +274,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe("Get Monster", () => {
-    test.only("Retrive Monster Data from Database",(done) => {
+    test("Retrive Monster Data from Database",(done) => {
       request(app)
       .get(`/combat/monster/${dummyMonsterId.id}`)
       .set('access_token',dummyToken)

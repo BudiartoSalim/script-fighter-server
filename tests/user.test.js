@@ -145,7 +145,8 @@ describe('User Routes Test', () => {
           } else {
             expect(res.status).toBe(200); //expect dapat http response status yang benar
               expect(res.body).toHaveProperty('access_token');
-              expect(res.body).toHaveProperty('user');
+              expect(res.body).toHaveProperty('UserStatus');
+              expect(res.body).toHaveProperty('username');
               done();
           }
         })
