@@ -24,9 +24,9 @@ class CombatController {
       })
       if (statusUpdate[1].collectedExp >= statusUpdate[1].requiredExp) {
         const leveledUpStat = await levelupCheck(statusUpdate[1].UserId);
-        res.status(200).json(leveledUpStat[1]);
+        res.status(200).json({ status: leveledUpStat[1] });
       } else {
-        res.status(200).json(statusUpdate[1]);
+        res.status(200).json({ status : statusUpdate[1] });
       }
     } catch (err) {
       next(err)
@@ -42,7 +42,7 @@ class CombatController {
       }
     })
       .then(monster => {
-        res.status(200).json(monster)
+        res.status(200).json({monster})
       })
       .catch(err => {
         res.status(500).json(err)
@@ -52,12 +52,16 @@ class CombatController {
   // POST /combat/question/:idquestion
   // comparing user answer to the question
   static compareAnswerPostHandler(req, res, next) {
+    // res.status(200).json({
+    //   message: 'Hai'
+    // })
     Question.findOne({
       where: {
         id: req.params.idquestion
       }
     })
       .then(questionData => {
+        console.log(req.body.answer === questionData.correct_answer)
         if (req.body.answer === questionData.correct_answer) {
           res.status(200).json({
             answerResult: true
