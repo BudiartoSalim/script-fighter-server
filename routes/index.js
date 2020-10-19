@@ -10,6 +10,7 @@ const CombatController = require('../controllers/combat-controller.js');
 
 router.post('/register', UserController.registerNewUserPostHandler);
 router.post('/login', UserController.loginUserPostHandler);
+router.get('/rank', UserController.getUserRankHandler);
 router.use(userAuthentication);
 router.get('/monster', CombatController.getMonsterHandler);
 router.use('/combat', CombatRouter);

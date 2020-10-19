@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "asdjkl",
     "database": "script_fighter",
     "host": "localhost",
     "dialect": "postgres"
