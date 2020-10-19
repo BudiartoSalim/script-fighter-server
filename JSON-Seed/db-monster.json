@@ -1,0 +1,32 @@
+[
+  {
+    "monster_name" : "Imhotep",
+    "hp" : 999,
+    "atk" : 999,
+    "def" : 999,
+    "experience" : 100,
+    "money" : 1500,
+    "difficulty" : 0,
+    "monster_image" : "https:///www.twitter.com/"
+  },
+  {
+    "monster_name" : "Sphynx",
+    "hp" : 100,
+    "atk" : 15,
+    "def" : 890,
+    "experience" : 90,
+    "money" : 750,
+    "difficulty" : 1,
+    "monster_image" : "https:///www.facebook.com/"
+  },
+  {
+    "monster_name" : "Basilisk",
+    "hp" : 999,
+    "atk" : 999,
+    "def" : 3000,
+    "experience" : 999,
+    "money" : 3000,
+    "difficulty" : 2,
+    "monster_image" : "https:///www.instagram.com/"
+  }
+]
