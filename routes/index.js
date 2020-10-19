@@ -10,8 +10,8 @@ const CombatController = require('../controllers/combat-controller.js');
 
 router.post('/register', UserController.registerNewUserPostHandler);
 router.post('/login', UserController.loginUserPostHandler);
-router.get('/monster', CombatController.getMonsterHandler);
 router.use(userAuthentication);
+router.get('/monster', CombatController.getMonsterHandler);
 router.use('/combat', CombatRouter);
 router.use('/shop', ShopRouter);
 router.patch('/users/difficulty', GameController.updateUserDifficulty);
