@@ -37,7 +37,7 @@ class GameController {
         res.status(400).json({ message: 'Already at max difficulty' })
       } else {
         //simple formula to make difficulty price scale
-        item.price = item.price + (item.price * item.difficulty);
+        //item.price = item.price + (item.price * item.difficulty);
 
         if (userStatus.money >= item.price) {
           const userStatUpdate = await UserStatus.update({
