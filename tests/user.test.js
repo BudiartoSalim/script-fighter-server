@@ -53,7 +53,7 @@ describe('User Routes Test', () => {
   })
 
   describe('POST /register', () => {
-    test.only('when success register', (done) => {
+    test('when success register', (done) => {
       request(app)
         .post('/register')
         .send({
@@ -72,7 +72,7 @@ describe('User Routes Test', () => {
           }
         })
      })
-    test.only('when failed register because email not valid', (done) => {
+    test('when failed register because email not valid', (done) => {
        request(app)
          .post('/register')
          .send({
@@ -91,7 +91,7 @@ describe('User Routes Test', () => {
          })
       })
 
-    test.only('when failed register because email containing unique character', (done) => {
+    test('when failed register because email containing unique character', (done) => {
         request(app)
           .post('/register')
           .send({
@@ -109,7 +109,7 @@ describe('User Routes Test', () => {
             }
           })
        })
-    test.only('when failed register because password length under 6 character or not containing unique character', (done) => {
+    test('when failed register because password length under 6 character or not containing unique character', (done) => {
          request(app)
            .post('/register')
            .send({
@@ -130,7 +130,7 @@ describe('User Routes Test', () => {
   })
 
   describe('POST /login', () => {
-    test.only('when success login', (done) => {
+    test('when success login', (done) => {
       request(app)
         .post('/login')
         .send({
@@ -151,7 +151,7 @@ describe('User Routes Test', () => {
           }
         })
      })
-    test.only('failed login because wrong password', (done) => {
+    test('failed login because wrong password', (done) => {
        request(app)
          .post('/login')
          .send({
@@ -169,7 +169,7 @@ describe('User Routes Test', () => {
          })
       })
 
-    test.only('failed login with unregistered email', (done) => {
+    test('failed login with unregistered email', (done) => {
         request(app)
           .post('/login')
           .send({
@@ -181,7 +181,7 @@ describe('User Routes Test', () => {
               done(err);
             } else {
               expect(res.status).toBe(400); //expect dapat http response status yang benar
-                expect(res.body).toHaveProperty('message', 'Email not found on our data. Please register your email first!');
+                expect(res.body).toHaveProperty('message', 'Incorrect Username/Password');
                 done();
             }
           })

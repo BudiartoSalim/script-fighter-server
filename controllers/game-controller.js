@@ -33,7 +33,6 @@ class GameController {
       })
       //safeguard to ensure user cannot buy more difficulty upgrade when it reaches the cap
       if (userStatus.currentDifficulty >= difficultyCap && item.difficulty >= 0) {
-        item.difficulty = 0;
         res.status(400).json({ message: 'Already at max difficulty' })
       } else {
         //simple formula to make difficulty price scale
@@ -64,7 +63,6 @@ class GameController {
         }
       }
     } catch (err) {
-      console.log(err)
       next(err);
     }
   }

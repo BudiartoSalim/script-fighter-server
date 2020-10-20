@@ -11,7 +11,6 @@ class CombatController {
       const questions = await Question.findAll({ where: { difficulty: currentUser.UserStatus.currentDifficulty } });
       res.status(200).json({ monsters, questions });
     } catch (err) {
-      console.log(err)
       next(err);
     }
   }
@@ -71,7 +70,6 @@ class CombatController {
       }
     })
       .then(questionData => {
-        console.log(req.body.answer === questionData.correct_answer)
         if (req.body.answer === questionData.correct_answer) {
           res.status(200).json({
             answerResult: true
