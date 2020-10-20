@@ -19,8 +19,8 @@ class UserController {
         requiredExp: 100,
         collectedExp: 0,
         money: 500,
-        maxDifficulty: 1,
-        currentDifficulty: 1,
+        maxDifficulty: 0,
+        currentDifficulty: 0,
         reputation: 0,
         UserId: newUser.id
       })
