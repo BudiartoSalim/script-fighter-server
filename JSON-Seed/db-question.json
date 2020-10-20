@@ -1,23 +1,107 @@
 [
   {
-    "question" : "Which one is the hardest?",
-    "answer" : "Object Refference,Pass Refference",
-    "correct_answer" : "Object Refference",
-    "explanation" : "Choose The Correct Answer",
+    "question" : "Inside which HTML element do we put the JavaScript?",
+    "answer" : "<javascript>!@!<script>!@!<js>!@!<scripting>",
+    "correct_answer" : "<script>",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
     "difficulty" : 0
   },
   {
-    "question" : "what is the correct answer?",
-    "answer" : "true,false",
-    "correct_answer" : "true",
-    "explanation" : "Choose The Correct Answer",
+    "question" : "What is the correct JavaScript syntax to change the content of the HTML element below?",
+    "answer" : "#demo.innerHTML = 'Hello World!';!@!document.getElementById('demo').innerHTML = 'Hello World!';!@!document.getElement('p').innerHTML = 'Hello World!';!@!document.getElementByName('p').innerHTML = 'Hello World!';",
+    "correct_answer" : "document.getElementById('demo').innerHTML = 'Hello World!';",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 0
+  },
+  {
+    "question" : "Where is the correct place to insert a JavaScript?",
+    "answer" : "The <head> section!@!The <body> section!@!The <footer>!@!Both the <head> section and the <body> section are correct",
+    "correct_answer" : "Both the <head> section and the <body> section are correct",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 0
+  },
+  {
+    "question" : "How do you create a function in JavaScript?",
+    "answer" : "function myFunction()!@!function:myFunction()!@!function = myFunction()",
+    "correct_answer" : "function myFunction()",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 0
+  },
+  {
+    "question" : "How to write an IF statement in JavaScript?",
+    "answer" : "if i = 5 then!@!if i = 5!@!if i == 5 then!@!if (i == 5)",
+    "correct_answer" : "if (i == 5)",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 0
+  },
+  {
+    "question" : "How can you add a comment in a JavaScript?",
+    "answer" : "//This is a comment!@!'This is a comment!@!<!--This is a comment-->",
+    "correct_answer" : "//This is a comment",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
     "difficulty" : 1
   },
   {
-    "question" : "Who's our first president?",
-    "answer" : "Soekarno,Sukarno",
-    "correct_answer" : "Soekarno",
-    "explanation" : "Choose The Correct Answer",
+    "question" : "What is the correct way to write a JavaScript array?",
+    "answer" : "var colors = 1 = ('red'), 2 = ('green'), 3 = ('blue')!@!var colors = 'red', 'green', 'blue'!@!var colors = ['red', 'green', 'blue']!@!var colors = (1:'red', 2:'green', 3:'blue')",
+    "correct_answer" : "var colors = ['red', 'green', 'blue']",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "What is the correct JavaScript syntax for opening a new window called 'w2' ?",
+    "answer" : "w2 = window.new('http://www.w3schools.com');!@!w2 = window.open('http://www.w3schools.com');",
+    "correct_answer" : "w2 = window.open('http://www.w3schools.com');",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "How do you declare a JavaScript variable?",
+    "answer" : "v carName;!@!variable carName;!@!var carName;",
+    "correct_answer" : "var carName;",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "Is JavaScript case-sensitive?",
+    "answer" : "True!@!False",
+    "correct_answer" : "True",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "What is the correct syntax for referring to an external script called 'xxx.js'?",
+    "answer" : "<script src='xxx.js'>!@!<script name='xxx.js'>!@!<script href='xxx.js'>",
+    "correct_answer" : "<script src='xxx.js'>",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "How to insert a comment that has more than one line?",
+    "answer" : "//this comment has \n more than one line//!@!/*this comment has \n more than one line*/!@!<!-- this comment has \n more than one line-->",
+    "correct_answer" : "/*this comment has \n more than one line*/",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "How do you round the number 7.25, to the nearest integer?",
+    "answer" : "round(7.25)!@!Math.rnd(7.25)!@!Math.round(7.25)!@!rnd(7.25)",
+    "correct_answer" : "Math.round(7.25)",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "How can you detect the client's browser name?",
+    "answer" : "client.navName!@!navigator.appName!@!browser.name",
+    "correct_answer" : "navigator.appName",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "What will the following code return: Boolean('b' > 'z')",
+    "answer" : "True!@!False",
+    "correct_answer" : "False",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
     "difficulty" : 2
   }
 ]
