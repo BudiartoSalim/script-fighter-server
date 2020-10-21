@@ -2,30 +2,30 @@
   {
     "monster_name" : "Imhotep",
     "hp" : 15,
-    "atk" : 10,
-    "def" : 10,
+    "atk" : 4,
+    "def" : 3,
     "experience" : 50,
-    "money" : 65,
+    "money" : 10,
     "difficulty" : 0,
     "monster_image" : "https:///www.twitter.com/"
   },
   {
     "monster_name" : "Sphynx",
-    "hp" : 50,
-    "atk" : 75,
-    "def" : 100,
-    "experience" : 90,
-    "money" : 750,
+    "hp" : 30,
+    "atk" : 10,
+    "def" : 7,
+    "experience" : 100,
+    "money" : 30,
     "difficulty" : 1,
     "monster_image" : "https:///www.facebook.com/"
   },
   {
     "monster_name" : "Basilisk",
     "hp" : 75,
-    "atk" : 100,
-    "def" : 125,
+    "atk" : 30,
+    "def" : 15,
     "experience" : 150,
-    "money" : 1000,
+    "money" : 70,
     "difficulty" : 2,
     "monster_image" : "https:///www.instagram.com/"
   }
