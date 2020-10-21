@@ -16,9 +16,36 @@ let dummyQuestionId;
 let dummyHypsterUser;
 let dummyHypsterUserToken;
 let dummyHypsterItem;
+let dummyNoobUser;
+let dummyNoobUserToken;
 describe("Game Routes Unit Test", () => {
   beforeAll(async (done) => {
     try {
+      const nubUser = await User.create({
+        email: "noob_sangad@mail.com",
+        username: "noob_sangad",
+        password: "noob_sangad12"
+      })
+      const nubStatus = await UserStatus.create({
+        level: 1,
+        hp: 100,
+        atk: 30,
+        def: 25,
+        requiredExp: 100,
+        collectedExp: 0,
+        money: 500,
+        maxDifficulty: 0,
+        currentDifficulty: 0,
+        reputation: 0,
+        UserId: nubUser.id
+      })
+      dummyNoobUser = await User.findOne({
+        where: {
+          id: nubUser.id
+        },
+        include: UserStatus
+      })
+      dummyNoobUserToken = await jwt.sign({id: dummyNoobUser.id, username: dummyNoobUser.username, status: dummyNoobUser.UserStatus}, process.env.JWT_SECRET_KEY)
       const user = await User.create({
         email: dummyUser.email,
         username: dummyUser.username,
@@ -264,7 +291,7 @@ describe("Game Routes Unit Test", () => {
     test("Failed upgrade status cause user's insufficient money", (done) => {
       request(app)
       .put(`/shop/${dummyHypsterItem.id}`)
-      .set('access_token', dummyToken)
+      .set('access_token', dummyNoobUserToken)
       .send({
         stat: 10,
         money: 50
