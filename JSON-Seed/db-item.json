@@ -2,7 +2,7 @@
   {
     "item_name" : "Almighty Scope",
     "price" : 150,
-    "description" : "Increase All Attribute",
+    "description" : "Memperkuat siapapun yang kepalanya kena cahaya matahari melalui lensa ini.",
     "atk" : 8,
     "hp" : 8,
     "def" : 10,
@@ -11,19 +11,37 @@
   {
     "item_name" : "Cangkul",
     "price" : 100,
-    "description" : "Increase Atk Attribute",
+    "description" : "Cangkul biasa. Meningkatkan kekuatan serangan.",
     "atk" : 10,
-    "hp" : 12,
+    "hp" : 0,
+    "def" : 0,
+    "difficulty" : 0
+  },  
+  {
+    "item_name" : "Sekop Pasir",
+    "price" : 100,
+    "description" : "Sekop sakti yang terbuat dari pasir.",
+    "atk" : 30,
+    "hp" : 20,
+    "def" : 15,
+    "difficulty" : 0
+  },
+  {
+    "item_name" : "Difficulty upgrade",
+    "price" : 100,
+    "description" : "Meningkatkan semua attribute dan difficulty.",
+    "atk" : 30,
+    "hp" : 20,
     "def" : 15,
     "difficulty" : 1
   },
   {
-    "item_name" : "Sekop Pasir",
-    "price" : 100,
-    "description" : "Increase deff Attribute",
-    "atk" : 30,
-    "hp" : 20,
-    "def" : 15,
-    "difficulty" : 2
+    "item_name" : "SmartSword",
+    "price" : 10000000,
+    "description" : "Barang mahal buat pansos.",
+    "atk" : 300,
+    "hp" : 200,
+    "def" : 150,
+    "difficulty" : 0
   }
 ]
