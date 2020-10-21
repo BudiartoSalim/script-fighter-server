@@ -124,7 +124,6 @@ describe("Game Routes Unit Test", () => {
       dummyToken = await jwt.sign({id: dummyUserId.id, username: dummyUserId.username, status: dummyUserId.UserStatus}, process.env.JWT_SECRET_KEY)
       done()
     } catch (err) {
-      console.log(err)
       done(err)
     }
   })
@@ -132,7 +131,6 @@ describe("Game Routes Unit Test", () => {
   describe("PUT /combat/experience", () => {
     describe("when success gain exp", () => {
       test("Success adding user exp", (done) => {
-        console.log(dummyUserId)
          request(app)
         .put(`/combat/experience`)
         .send({
@@ -151,7 +149,6 @@ describe("Game Routes Unit Test", () => {
         })
       })
       test("Success adding user exp with huge exp", (done) => {
-        console.log(dummyUserId)
          request(app)
         .put(`/combat/experience`)
         .send({
@@ -190,7 +187,6 @@ describe("Game Routes Unit Test", () => {
         })
       })
       test("Failed adding user exp because no have access_token", (done) => {
-        console.log(dummyUserId)
          request(app)
         .put(`/combat/experience`)
         .send({
@@ -226,6 +222,23 @@ describe("Game Routes Unit Test", () => {
           expect(res.status).toBe(200)
           expect(res.body).toHaveProperty('userStatus')
           expect(res.body).toHaveProperty('message', 'Successfully upgrade your status')
+          done()
+        }
+      })
+    })
+    test("Failed upgrade status when item is none", (done) => {
+      request(app)
+      .put(`/shop/500`)
+      .set('access_token', dummyToken)
+      .send({
+        stat: 10,
+        money: 50
+      })
+      .end(function(err,res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(500)
           done()
         }
       })
@@ -435,6 +448,20 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
+    test("Failed Retrive Monster From Database with Fake/Expired token",(done) => {
+      request(app)
+      .get(`/monster`)
+      .set('access_token',dummyFakeToken)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(401)
+          expect(res.body).toHaveProperty('message','Unauthorized.')
+          done()
+        }
+      })
+    })
     test("Failed Retrive Monster From Database without access_token",(done) => {
       request(app)
       .get(`/monster`)
@@ -525,7 +552,6 @@ describe("Game Routes Unit Test", () => {
         done()
       })
       .catch(err => {
-        console.log(err)
         done(err)
       })
     } catch (err) {

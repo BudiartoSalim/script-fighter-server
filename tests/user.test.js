@@ -44,7 +44,6 @@ describe('User Routes Test', () => {
         })
       })
       .then(data => {
-        console.log('user has been deleted');
         done();
       })
     } catch (err) {
@@ -72,6 +71,42 @@ describe('User Routes Test', () => {
           }
         })
      })
+     test('failed register cause re-enter the same username for registration(Unique constraint email validaton test)', (done) => {
+       request(app)
+         .post('/register')
+         .send({
+           email: dummyLogin.email,
+           username: dummyLogin.username,
+           password: dummyLogin.password
+         })
+         .end(function (err, res) {
+           if (err) {
+             done(err);
+           } else {
+             expect(res.status).toBe(400); //expect dapat http response status yang benar
+               expect(res.body).toHaveProperty('message','username must be unique');
+               done();
+           }
+         })
+      })
+      test('failed register cause re-enter the same email for registration(Unique constraint email validaton test)', (done) => {
+        request(app)
+          .post('/register')
+          .send({
+            email: dummyLogin.email,
+            username: 'unique_username',
+            password: dummyLogin.password
+          })
+          .end(function (err, res) {
+            if (err) {
+              done(err);
+            } else {
+              expect(res.status).toBe(400); //expect dapat http response status yang benar
+                expect(res.body).toHaveProperty('message','email must be unique');
+                done();
+            }
+          })
+       })
     test('when failed register because email not valid', (done) => {
        request(app)
          .post('/register')
@@ -139,8 +174,6 @@ describe('User Routes Test', () => {
         })
         .end(function (err, res) {
           if (err) {
-            console.log(err)
-            console.log(res)
             done(err);
           } else {
             expect(res.status).toBe(200); //expect dapat http response status yang benar
