@@ -13,12 +13,12 @@ class UserController {
       })
       const newUserStatus = await UserStatus.create({
         level: 1,
-        hp: 100,
-        atk: 30,
-        def: 25,
+        hp: 15,
+        atk: 5,
+        def: 3,
         requiredExp: 100,
         collectedExp: 0,
-        money: 500,
+        money: 100,
         maxDifficulty: 0,
         currentDifficulty: 0,
         reputation: 0,
