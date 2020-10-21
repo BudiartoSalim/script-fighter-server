@@ -44,7 +44,6 @@ describe('User Routes Test', () => {
         })
       })
       .then(data => {
-        console.log('user has been deleted');
         done();
       })
     } catch (err) {
@@ -53,7 +52,7 @@ describe('User Routes Test', () => {
   })
 
   describe('POST /register', () => {
-    test.only('when success register', (done) => {
+    test('when success register', (done) => {
       request(app)
         .post('/register')
         .send({
@@ -72,7 +71,43 @@ describe('User Routes Test', () => {
           }
         })
      })
-    test.only('when failed register because email not valid', (done) => {
+     test('failed register cause re-enter the same username for registration(Unique constraint email validaton test)', (done) => {
+       request(app)
+         .post('/register')
+         .send({
+           email: dummyLogin.email,
+           username: dummyLogin.username,
+           password: dummyLogin.password
+         })
+         .end(function (err, res) {
+           if (err) {
+             done(err);
+           } else {
+             expect(res.status).toBe(400); //expect dapat http response status yang benar
+               expect(res.body).toHaveProperty('message','username must be unique');
+               done();
+           }
+         })
+      })
+      test('failed register cause re-enter the same email for registration(Unique constraint email validaton test)', (done) => {
+        request(app)
+          .post('/register')
+          .send({
+            email: dummyLogin.email,
+            username: 'unique_username',
+            password: dummyLogin.password
+          })
+          .end(function (err, res) {
+            if (err) {
+              done(err);
+            } else {
+              expect(res.status).toBe(400); //expect dapat http response status yang benar
+                expect(res.body).toHaveProperty('message','email must be unique');
+                done();
+            }
+          })
+       })
+    test('when failed register because email not valid', (done) => {
        request(app)
          .post('/register')
          .send({
@@ -91,7 +126,7 @@ describe('User Routes Test', () => {
          })
       })
 
-    test.only('when failed register because email containing unique character', (done) => {
+    test('when failed register because email containing unique character', (done) => {
         request(app)
           .post('/register')
           .send({
@@ -109,7 +144,7 @@ describe('User Routes Test', () => {
             }
           })
        })
-    test.only('when failed register because password length under 6 character or not containing unique character', (done) => {
+    test('when failed register because password length under 6 character or not containing unique character', (done) => {
          request(app)
            .post('/register')
            .send({
@@ -130,7 +165,7 @@ describe('User Routes Test', () => {
   })
 
   describe('POST /login', () => {
-    test.only('when success login', (done) => {
+    test('when success login', (done) => {
       request(app)
         .post('/login')
         .send({
@@ -139,8 +174,6 @@ describe('User Routes Test', () => {
         })
         .end(function (err, res) {
           if (err) {
-            console.log(err)
-            console.log(res)
             done(err);
           } else {
             expect(res.status).toBe(200); //expect dapat http response status yang benar
@@ -151,7 +184,7 @@ describe('User Routes Test', () => {
           }
         })
      })
-    test.only('failed login because wrong password', (done) => {
+    test('failed login because wrong password', (done) => {
        request(app)
          .post('/login')
          .send({
@@ -169,7 +202,7 @@ describe('User Routes Test', () => {
          })
       })
 
-    test.only('failed login with unregistered email', (done) => {
+    test('failed login with unregistered email', (done) => {
         request(app)
           .post('/login')
           .send({
@@ -181,7 +214,7 @@ describe('User Routes Test', () => {
               done(err);
             } else {
               expect(res.status).toBe(400); //expect dapat http response status yang benar
-                expect(res.body).toHaveProperty('message', 'Email not found on our data. Please register your email first!');
+                expect(res.body).toHaveProperty('message', 'Incorrect Username/Password');
                 done();
             }
           })

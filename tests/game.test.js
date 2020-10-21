@@ -8,13 +8,44 @@ let dummyUser = {
   email: 'dummy_user@mail.com',
   password: 'dummy_user'
 }
+let dummyFakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTYsInVzZXJuYW1lIjoiaW5pX2Zha2UiLCJpYXQiOjE2MDMxODMxNzJ9.m1VIMkDdVCzTXxf0SCjYl19obpPiM1wbMjkRgh_eeWw"
 let dummyUserId;
 let dummyItemId;
 let dummyMonsterId;
 let dummyQuestionId;
+let dummyHypsterUser;
+let dummyHypsterUserToken;
+let dummyHypsterItem;
+let dummyNoobUser;
+let dummyNoobUserToken;
 describe("Game Routes Unit Test", () => {
   beforeAll(async (done) => {
     try {
+      const nubUser = await User.create({
+        email: "noob_sangad@mail.com",
+        username: "noob_sangad",
+        password: "noob_sangad12"
+      })
+      const nubStatus = await UserStatus.create({
+        level: 1,
+        hp: 100,
+        atk: 30,
+        def: 25,
+        requiredExp: 100,
+        collectedExp: 0,
+        money: 500,
+        maxDifficulty: 0,
+        currentDifficulty: 0,
+        reputation: 0,
+        UserId: nubUser.id
+      })
+      dummyNoobUser = await User.findOne({
+        where: {
+          id: nubUser.id
+        },
+        include: UserStatus
+      })
+      dummyNoobUserToken = await jwt.sign({id: dummyNoobUser.id, username: dummyNoobUser.username, status: dummyNoobUser.UserStatus}, process.env.JWT_SECRET_KEY)
       const user = await User.create({
         email: dummyUser.email,
         username: dummyUser.username,
@@ -25,6 +56,30 @@ describe("Game Routes Unit Test", () => {
           id: user.id
         }
       })
+      const opUser = await User.create({
+        username: 'over_power_user',
+        email: 'over_power_user@mail.com',
+        password: 'over_power_user'
+      })
+      dummyHypsterUser = await User.findOne({
+        where: {
+          id: opUser.id
+        }
+      })
+      const opHypsterUser = await UserStatus.create({
+        level: 1,
+        hp: 100,
+        atk: 30,
+        def: 25,
+        requiredExp: 100,
+        collectedExp: 0,
+        money: 500,
+        maxDifficulty: 2,
+        currentDifficulty: 2,
+        reputation: 0,
+        UserId: dummyHypsterUser.id
+      })
+      dummyHypsterUserToken = await jwt.sign({id: dummyHypsterUser.id, username: dummyHypsterUser.username, status: dummyHypsterUser.UserStatus}, process.env.JWT_SECRET_KEY)
       const userStatus = await UserStatus.create({
           level: 1,
           hp: 100,
@@ -38,6 +93,20 @@ describe("Game Routes Unit Test", () => {
           reputation: 0,
           UserId: dummyUserId.id
         })
+      const abyssItem = await ItemShop.create({
+        item_name: 'Golden Apple',
+        price: 9999,
+        description: 'Goddess Legendary Item',
+        atk: 999,
+        hp: 999,
+        def: 999,
+        difficulty: 1
+      })
+      dummyHypsterItem = await ItemShop.findOne({
+        where: {
+          id: abyssItem.id
+        }
+      })
       const monster = await Monster.create({
           monster_name: 'Imhotep',
           hp: 999,
@@ -82,15 +151,13 @@ describe("Game Routes Unit Test", () => {
       dummyToken = await jwt.sign({id: dummyUserId.id, username: dummyUserId.username, status: dummyUserId.UserStatus}, process.env.JWT_SECRET_KEY)
       done()
     } catch (err) {
-      console.log(err)
       done(err)
     }
   })
 
   describe("PUT /combat/experience", () => {
     describe("when success gain exp", () => {
-      test.only("Success adding user exp", (done) => {
-        console.log(dummyUserId)
+      test("Success adding user exp", (done) => {
          request(app)
         .put(`/combat/experience`)
         .send({
@@ -108,9 +175,27 @@ describe("Game Routes Unit Test", () => {
           }
         })
       })
+      test("Success adding user exp with huge exp", (done) => {
+         request(app)
+        .put(`/combat/experience`)
+        .send({
+          experience: 700,
+          money: 50
+        })
+        .set('access_token', dummyToken)
+        .expect(200)
+        .end(function(err,res){
+          if(err) {
+            done(err)
+          } else {
+            expect(res.body).toHaveProperty('status')
+            done()
+          }
+        })
+      })
     })
     describe("when failed gain exp", () => {
-      test.only("Failed put player exp with non-integer value of exp", (done) => {
+      test("Failed put player exp with non-integer value of exp", (done) => {
         request(app)
         .put(`/combat/experience`)
         .set('access_token', dummyToken)
@@ -128,8 +213,7 @@ describe("Game Routes Unit Test", () => {
           }
         })
       })
-      test.only("Failed adding user exp because no have access_token", (done) => {
-        console.log(dummyUserId)
+      test("Failed adding user exp because no have access_token", (done) => {
          request(app)
         .put(`/combat/experience`)
         .send({
@@ -150,7 +234,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe("PUT /shop/:item", () =>{
-    test.only("Success upgrade status", (done) => {
+    test("Success upgrade status", (done) => {
       request(app)
       .put(`/shop/${dummyItemId.id}`)
       .set('access_token', dummyToken)
@@ -169,7 +253,78 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("Failed upgrade status without access_token", (done) => {
+    test("Failed upgrade status when item is none", (done) => {
+      request(app)
+      .put(`/shop/500`)
+      .set('access_token', dummyToken)
+      .send({
+        stat: 10,
+        money: 50
+      })
+      .end(function(err,res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(500)
+          done()
+        }
+      })
+    })
+    test("Failed upgrade status with fake access_token", (done) => {
+      request(app)
+      .put(`/shop/${dummyItemId.id}`)
+      .set('access_token', dummyFakeToken)
+      .send({
+        stat: 10,
+        money: 50
+      })
+      .end(function(err,res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(401)
+          expect(res.body).toHaveProperty('message', 'Unauthorized.')
+          done()
+        }
+      })
+    })
+    test("Failed upgrade status cause user's insufficient money", (done) => {
+      request(app)
+      .put(`/shop/${dummyHypsterItem.id}`)
+      .set('access_token', dummyNoobUserToken)
+      .send({
+        stat: 10,
+        money: 50
+      })
+      .end(function(err,res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(400)
+          expect(res.body).toHaveProperty('message', 'money not enough')
+          done()
+        }
+      })
+    })
+    test("Failed upgrade status when user status is already Max", (done) => {
+      request(app)
+      .put(`/shop/${dummyItemId.id}`)
+      .set('access_token', dummyHypsterUserToken)
+      .send({
+        stat: 10,
+        money: 50
+      })
+      .end(function(err,res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(400)
+          expect(res.body).toHaveProperty('message','Already at max difficulty')
+          done()
+        }
+      })
+    })
+    test("Failed upgrade status without access_token", (done) => {
       request(app)
       .put(`/shop/${dummyItemId.id}`)
       .send({
@@ -188,7 +343,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe("POST /combat/question/:idquestion",() => {
-    test.only('Checking Answer if User Answer is true', (done) => {
+    test('Checking Answer if User Answer is true', (done) => {
       request(app)
       .post(`/combat/question/${dummyQuestionId.id}`)
       .set('access_token',dummyToken)
@@ -205,7 +360,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only('Checking Answer if User Answer is true', (done) => {
+    test('Checking Answer if User Answer is true', (done) => {
       request(app)
       .post(`/combat/question/${dummyQuestionId.id}`)
       .set('access_token',dummyToken)
@@ -224,7 +379,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe('PATCH /users/difficulty', () => {
-    test.only("success editing user difficulty",(done) => {
+    test("success editing user difficulty",(done) => {
       request(app)
       .patch(`/users/difficulty`)
       .set('access_token',dummyToken)
@@ -241,7 +396,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("failed editing user difficulty",(done) => {
+    test("failed editing user difficulty",(done) => {
       request(app)
       .patch(`/users/difficulty`)
       .set('access_token',dummyToken)
@@ -258,7 +413,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("failed editing user difficulty without access_token",(done) => {
+    test("failed editing user difficulty without access_token",(done) => {
       request(app)
       .patch(`/users/difficulty`)
       .send({
@@ -276,7 +431,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe("Get Monster By Specific ID", () => {
-    test.only("Success Retrive Monster Data from Database By Specific Id",(done) => {
+    test("Success Retrive Monster Data from Database By Specific Id",(done) => {
       request(app)
       .get(`/combat/monster/${dummyMonsterId.id}`)
       .set('access_token',dummyToken)
@@ -290,7 +445,7 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("Failed Retrive Monster Data from Database By Specific Id without access_token",(done) => {
+    test("Failed Retrive Monster Data from Database By Specific Id without access_token",(done) => {
       request(app)
       .get(`/combat/monster/${dummyMonsterId.id}`)
       .end(function(err, res) {
@@ -305,7 +460,7 @@ describe("Game Routes Unit Test", () => {
     })
   })
   describe("Get All Monster With the same difficult as User Difficulty", () => {
-    test.only("Success Retrive Monster From Database",(done) => {
+    test("Success Retrive Monster From Database",(done) => {
       request(app)
       .get(`/monster`)
       .set('access_token',dummyToken)
@@ -320,7 +475,21 @@ describe("Game Routes Unit Test", () => {
         }
       })
     })
-    test.only("Failed Retrive Monster From Database without access_token",(done) => {
+    test("Failed Retrive Monster From Database with Fake/Expired token",(done) => {
+      request(app)
+      .get(`/monster`)
+      .set('access_token',dummyFakeToken)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(401)
+          expect(res.body).toHaveProperty('message','Unauthorized.')
+          done()
+        }
+      })
+    })
+    test("Failed Retrive Monster From Database without access_token",(done) => {
       request(app)
       .get(`/monster`)
       .end(function(err, res) {
@@ -329,6 +498,49 @@ describe("Game Routes Unit Test", () => {
         } else {
           expect(res.status).toBe(401)
           expect(res.body).toHaveProperty('message','Unauthorized.')
+          done()
+        }
+      })
+    })
+  })
+  describe("Get all Items from shop", () => {
+    test("Success Retrive all shops item from db",(done) => {
+      request(app)
+      .get(`/shop`)
+      .set('access_token',dummyToken)
+      .end(function(err, res) {
+        if(err) {
+          throw err
+        } else {
+          expect(res.status).toBe(200)
+          done()
+        }
+      })
+    })
+    test("Failed to Retrive all shops item from db without access_token",(done) => {
+      request(app)
+      .get(`/shop`)
+      .end(function(err, res) {
+        if(err) {
+          done(err)
+        } else {
+          expect(res.status).toBe(401)
+          expect(res.body).toHaveProperty('message','Unauthorized.')
+          done()
+        }
+      })
+    })
+  })
+  describe("Get user Rank status from Database", () => {
+    test("Success Retrive all shops item from db",(done) => {
+      request(app)
+      .get(`/rank`)
+      .end(function(err, res) {
+        if(err) {
+          throw err
+        } else {
+          expect(res.status).toBe(200)
+          expect(res.body).toHaveProperty('userRank')
           done()
         }
       })
@@ -367,7 +579,6 @@ describe("Game Routes Unit Test", () => {
         done()
       })
       .catch(err => {
-        console.log(err)
         done(err)
       })
     } catch (err) {

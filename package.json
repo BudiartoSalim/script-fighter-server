@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node ./http/server.js",
     "dev": "npx nodemon ./http/server.js",
-    "test": "jest --verbose --runInBand --detectOpenHandles --forceExit"
+    "test": "jest --verbose --runInBand --detectOpenHandles --coverage --forceExit"
+  },
+  "jest" : {
+    "coveragePathIgnorePatterns" : ["<rootDir>/models/index.js"]
   },
   "repository": {
     "type": "git",

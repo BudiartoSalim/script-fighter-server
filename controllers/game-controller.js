@@ -6,7 +6,7 @@ class GameController {
   // GET /shop
   static async getShopContent(req, res, next) {
     try {
-      const userData = await User.findOne({ where: { id: req.payload.id } });
+      const userData = await UserStatus.findOne({ where: { UserId: req.payload.id } });
       let shopData = await ItemShop.findAll({ order: ['id'] });
       if (userData.maxDifficulty >= difficultyCap) { //prevent the shop sending difficulty upgrade if player alr max it
         shopData = shopData.filter((el) => el.difficulty === 0);
@@ -32,8 +32,7 @@ class GameController {
         }
       })
       //safeguard to ensure user cannot buy more difficulty upgrade when it reaches the cap
-      if (userStatus.currentDifficulty >= difficultyCap && item.difficulty >= 0) {
-        item.difficulty = 0;
+      if (userStatus.maxDifficulty >= difficultyCap && item.difficulty > 0) {
         res.status(400).json({ message: 'Already at max difficulty' })
       } else {
         //simple formula to make difficulty price scale
@@ -45,7 +44,7 @@ class GameController {
             hp: (userStatus.hp + item.hp),
             def: (userStatus.def + item.def),
             money: (userStatus.money - item.price),
-            maxDifficulty: userStatus.currentDifficulty + item.difficulty
+            maxDifficulty: userStatus.maxDifficulty + item.difficulty
           }, {
             where: {
               id: userStatus.id
@@ -64,7 +63,6 @@ class GameController {
         }
       }
     } catch (err) {
-      console.log(err)
       next(err);
     }
   }
