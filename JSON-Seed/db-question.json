@@ -35,6 +35,41 @@
     "difficulty" : 0
   },
   {
+    "question" : "In which of the following areas, Node.js is perfect to use?",
+    "answer" : "I/O bound Applications!@!Data Streaming Applications!@!Data Intensive Realtime Applications (DIRT)!@!All of the above.",
+    "correct_answer" : "All of the above.",
+    "explanation" : "https://www.tutorialspoint.com/nodejs/",
+    "difficulty" : 0
+  },
+  {
+    "question" : "By default, npm installs any dependency in the global mode.",
+    "answer" : "true!@!false",
+    "correct_answer" : "false",
+    "explanation" : "https://www.tutorialspoint.com/nodejs/",
+    "difficulty" : 0
+  },
+  {
+    "question" : "Command to list all modules that are install globally? ",
+    "answer" : "npm ls -g!@!npm ls!@!node ls -g!@!node ls",
+    "correct_answer" : "npm ls -g",
+    "explanation" : "https://www.tutorialspoint.com/nodejs/",
+    "difficulty" : 0
+  },
+  {
+    "question" : "Which of the following is true about File I/O in Node applications?",
+    "answer" : "Node implements File I/O using simple wrappers around standard POSIX functions.!@!Node File System (fs) module should be imported for File I/O opearations.!@!Both of the above.!@!None of the above.",
+    "correct_answer" : "Both of the above.",
+    "explanation" : "https://www.tutorialspoint.com/nodejs/",
+    "difficulty" : 0
+  },
+  {
+    "question" : "Which method of fs module is used to remove a directory?",
+    "answer" : "fs.deleteDirectory(path[, mode], callback)!@!fs.rmdir(path, callback)!@!fs.removeDirectory(path[, mode], callback)!@!None of the above.",
+    "correct_answer" : "fs.rmdir(path, callback)",
+    "explanation" : "https://www.tutorialspoint.com/nodejs/",
+    "difficulty" : 0
+  },
+  {
     "question" : "How can you add a comment in a JavaScript?",
     "answer" : "//This is a comment!@!'This is a comment!@!<!--This is a comment-->",
     "correct_answer" : "//This is a comment",
@@ -70,6 +105,41 @@
     "difficulty" : 1
   },
   {
+    "question" : "What is Callback?",
+    "answer" : "Callback is an asynchronous equivalent for a function.!@!Callback is a technique in which a method call back the caller method.!@!Both of the above.!@!None of the above.",
+    "correct_answer" : "Both of the above.",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "Which of the following module is required for path specific operations?",
+    "answer" : "os module!@!fs module!@!path module!@!None of the above.",
+    "correct_answer" : "path module",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "Which of the following module is required for DNS specific operations?",
+    "answer" : "dns module!@!web module!@!net module!@!None of the above.",
+    "correct_answer" : "dns module",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "Which of the following module is required to create a child process?",
+    "answer" : "process module!@!child_process module!@!child module!@!web module",
+    "correct_answer" : "child_process module",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
+    "question" : "Child processes always have three streams child.stdin, child.stdout, and child.stderr which may be shared with the stdio streams of the parent process.",
+    "answer" : "true!@!false",
+    "correct_answer" : "true",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 1
+  },
+  {
     "question" : "What is the correct syntax for referring to an external script called 'xxx.js'?",
     "answer" : "<script src='xxx.js'>!@!<script name='xxx.js'>!@!<script href='xxx.js'>",
     "correct_answer" : "<script src='xxx.js'>",
@@ -101,6 +171,41 @@
     "question" : "What will the following code return: Boolean('b' > 'z')",
     "answer" : "True!@!False",
     "correct_answer" : "False",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "Which of the following are Node.js streams types?",
+    "answer" : "Writable!@!Duplex!@!Readable!@!All of the above",
+    "correct_answer" : "All of the above",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "Nodejs is written in_____________.",
+    "answer" : "Javascript!@!C!@!C++!@!All of the Above",
+    "correct_answer" : "All of the Above",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "How do you install nodemon using Node.js?",
+    "answer" : "npm install -g nodemon!@!node install -g nodemon",
+    "correct_answer" : "npm install -g nodemon",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "How do you kill a process in node.js?",
+    "answer" : "Ctrl + C!@!Ctrl + B!@!Ctrl + K",
+    "correct_answer" : "Ctrl + C",
+    "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
+    "difficulty" : 2
+  },
+  {
+    "question" : "Node uses__________engine in core.",
+    "answer" : "Chorme V8!@!Microsoft Chakra!@!SpiderMonkey!@!Node En",
+    "correct_answer" : "Chorme V8",
     "explanation" : "https://www.w3schools.com/js/DEFAULT.asp",
     "difficulty" : 2
   }
