@@ -8,8 +8,10 @@
     "dev": "npx nodemon ./http/server.js",
     "test": "jest --verbose --runInBand --detectOpenHandles --coverage --forceExit"
   },
-  "jest" : {
-    "coveragePathIgnorePatterns" : ["<rootDir>/models/index.js"]
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/models/index.js"
+    ]
   },
   "repository": {
     "type": "git",
